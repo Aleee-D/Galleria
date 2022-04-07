@@ -3,6 +3,25 @@ import { RootState } from 'store'
 import data from 'data/data.json'
 import { Painting } from 'models/painting'
 
+import { parse } from 'rss-to-json'
+
+let data_rss = null
+
+// async await
+;(async function () {
+  data_rss = await parse(
+    'https://www.izquierdasocialista.org.ar/2020/index.php/blog/elsocialista/itemlist/category/750-el-socialista-n-530?format=feed',
+    {
+      method: 'get',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Access-Control-Allow-Origin': '*',
+      },
+    }
+  )
+  console.log(JSON.stringify(data_rss, null, 3))
+})()
+
 type SlidesSlice = {
   slides: Painting[]
   direction: number

@@ -71,4 +71,13 @@ If there is one code fragment I'd like to highlight, that would be slides autopl
     return clearInterval
 
   }, [currentIndex, isSlideshowPlaying, startInterval, dispatch])
+
+
+  # ---------------------------- 
+  
+  Aleee Upgrade
+
+  npm install rss-to-json --save
+  
+
 ```
