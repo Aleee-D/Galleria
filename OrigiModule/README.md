@@ -77,7 +77,12 @@ If there is one code fragment I'd like to highlight, that would be slides autopl
   
   Aleee Upgrade
 
-  npm install rss-to-json --save
-  
+  https://expressjs.com/en/starter/generator.html
+  npx express-generator
+  npm install
+  SET DEBUG=galleria:*
+  npm start
 
+  Ver cómo poner una app React con Jade // Babel o algo así
+  
 ```
