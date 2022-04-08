@@ -7,7 +7,7 @@ import { parse } from 'rss-to-json'
 
 let data_rss = null
 
-// async await
+// async await ---
 ;(async function () {
   data_rss = await parse(
     'https://www.izquierdasocialista.org.ar/2020/index.php/blog/elsocialista/itemlist/category/750-el-socialista-n-530?format=feed',
