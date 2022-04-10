@@ -1,128 +1,279 @@
-import { useEffect } from 'react'
-import { useAsync } from 'react-async'import { Painting } from 'models/painting'
+import { useAsync } from 'react-async'
 import { parse } from 'rss-to-json'
+import GalleryCard from 'components/molecules/GalleryCard'
+import { getAllJSDocTags } from 'typescript'
 
-const getRemoteData = () =>{
-    const FetchRss = async () => {
-        const response_rss = await parse('http://localhost:5000/elsocialista', {
-            method: 'get',
-            headers: {
-            'Content-Type': 'multipart/form-data',
-            },
-        })
-        if (!response_rss.title) throw new Error('fetch')
-        return response_rss
-    }
+let dataLib
 
-    const GetFullRss = () => {
-        const { data, error } = useAsync({ promiseFn: FetchRss })
-
-        if (data) {
-            const data_json3 = data.items.map(item => {
-            return {
-                name: String(''),
-                year: Number(item.pubDate),
-                description: String(item.description),
-                source: String(item.link),
-                artist: {
-                image: String(''),
-                name: String(''),
-                },
-                images: {
-                thumbnail: String(item.enclosures[0].url),
-                hero: {
-                    small: String(''),
-                    large: String(''),
-                },
-                gallery: String(''),
-                },
-            }
-            })
-            console.log(data)
-            return data_json3.map((painting, index) => {
-            return <GalleryCard {...painting} id={index} key={index} />
-            })
-        } else {
-            const aPainting: Painting[] = [
-            {
-                name: String(''),
-                year: Number(''),
-                description: String(''),
-                source: String(''),
-                artist: {
-                image: String(''),
-                name: String(''),
-                },
-                images: {
-                thumbnail: String(''),
-                hero: {
-                    small: String(''),
-                    large: String(''),
-                },
-                gallery: String(''),
-                },
-            },
-            ]
-            return aPainting.map((painting, index) => {
-            return <GalleryCard {...painting} id={index} key={index} />
-            })
-        }
-    }
-
-    const GetARss = () => {
-        const { data, error } = useAsync({ promiseFn: FetchRss })
-
-        if (data) {
-            const data_json3 = data.items.map(item => {
-            return {
-                name: String(''),
-                year: Number(item.pubDate),
-                description: String(item.description),
-                source: String(item.link),
-                artist: {
-                image: String(''),
-                name: String(''),
-                },
-                images: {
-                thumbnail: String(item.enclosures[0].url),
-                hero: {
-                    small: String(''),
-                    large: String(''),
-                },
-                gallery: String(''),
-                },
-            }
-            })
-            console.log(data)
-            return data_json3.map((painting, index) => {
-            return <GalleryCard {...painting} id={index} key={index} />
-            })
-        } else {
-            const aPainting: Painting[] = [
-            {
-                name: String(''),
-                year: Number(''),
-                description: String(''),
-                source: String(''),
-                artist: {
-                image: String(''),
-                name: String(''),
-                },
-                images: {
-                thumbnail: String(''),
-                hero: {
-                    small: String(''),
-                    large: String(''),
-                },
-                gallery: String(''),
-                },
-            },
-            ]
-            return aPainting.map((painting, index) => {
-            return <GalleryCard {...painting} id={index} key={index} />
-            })
-        }
-    }
+async function FetchRss() {
+  const response_rss = await parse('http://localhost:5000/elsocialista', {
+    method: 'get',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  if (!response_rss.title) throw new Error('fetch')
+  return response_rss
 }
 
-export default getRemoteData;
+function GetRss() {
+  const { data, error } = useAsync({ promiseFn: FetchRss })
+  dataLib = data
+  return data
+}
+
+export const aPainting = [
+  {
+    name: String(''),
+    year: Number(''),
+    description: String(''),
+    source: String(''),
+    artist: {
+      image: String(''),
+      name: String(''),
+    },
+    images: {
+      thumbnail: String(''),
+      hero: {
+        small: String(''),
+        large: String(''),
+      },
+      gallery: String(''),
+    },
+  },
+]
+
+export function GetFullRss() {
+  let data
+  data = GetRss()
+  if (typeof data != 'undefined') {
+    const data_json3 = data.items.map(item => {
+      return {
+        name: String(''),
+        year: Number(item.pubDate),
+        description: String(item.description),
+        source: String(item.link),
+        artist: {
+          image: String(''),
+          name: String(''),
+        },
+        images: {
+          thumbnail: String(item.enclosures[0].url),
+          hero: {
+            small: String(''),
+            large: String(''),
+          },
+          gallery: String(''),
+        },
+      }
+    })
+    return data_json3.map((painting, index) => {
+      return <GalleryCard {...painting} id={index} key={index} />
+    })
+  } else {
+    console.log('data NO tiene datos')
+    return aPainting.map((painting, index) => {
+      return <GalleryCard {...painting} id={index} key={index} />
+    })
+  }
+}
+
+export function GetFullRssPaiting() {
+  let data
+  data = dataLib
+  if (data) {
+    const data_json3 = data.items.map(item => {
+      return {
+        name: String(''),
+        year: Number(item.pubDate),
+        description: String(item.description),
+        source: String(item.link),
+        artist: {
+          image: String(''),
+          name: String(''),
+        },
+        images: {
+          thumbnail: String(item.enclosures[0].url),
+          hero: {
+            small: String(''),
+            large: String(''),
+          },
+          gallery: String(''),
+        },
+      }
+    })
+    console.log(data)
+    return data_json3
+  } else {
+    return aPainting
+  }
+}
+/*class GetRemoteData {
+  constructor() {
+    this.aPainting = [
+      {
+        name: String(''),
+        year: Number(''),
+        description: String(''),
+        source: String(''),
+        artist: {
+          image: String(''),
+          name: String(''),
+        },
+        images: {
+          thumbnail: String(''),
+          hero: {
+            small: String(''),
+            large: String(''),
+          },
+          gallery: String(''),
+        },
+      },
+    ]
+  }
+
+  static getAPainting() {
+    return this.aPainting
+  }
+
+  getFullRss() {
+    const data = GetRss()
+
+    if (data) {
+      const data_json3 = data.items.map(item => {
+        return {
+          name: String(''),
+          year: Number(item.pubDate),
+          description: String(item.description),
+          source: String(item.link),
+          artist: {
+            image: String(''),
+            name: String(''),
+          },
+          images: {
+            thumbnail: String(item.enclosures[0].url),
+            hero: {
+              small: String(''),
+              large: String(''),
+            },
+            gallery: String(''),
+          },
+        }
+      })
+      console.log(data)
+      return data_json3.map((painting, index) => {
+        return <GalleryCard {...painting} id={index} key={index} />
+      })
+    } else {
+      return this.aPainting.map((painting, index) => {
+        return <GalleryCard {...painting} id={index} key={index} />
+      })
+    }
+  }
+
+  static getFullRssJson() {
+    const data = GetRss()
+
+    if (data) {
+      const data_json3 = data.items.map(item => {
+        return {
+          name: String(''),
+          year: Number(item.pubDate),
+          description: String(item.description),
+          source: String(item.link),
+          artist: {
+            image: String(''),
+            name: String(''),
+          },
+          images: {
+            thumbnail: String(item.enclosures[0].url),
+            hero: {
+              small: String(''),
+              large: String(''),
+            },
+            gallery: String(''),
+          },
+        }
+      })
+      console.log(data)
+      return data_json3
+    } else {
+      const aPainting: Painting[] = [
+        {
+          name: String(''),
+          year: Number(''),
+          description: String(''),
+          source: String(''),
+          artist: {
+            image: String(''),
+            name: String(''),
+          },
+          images: {
+            thumbnail: String(''),
+            hero: {
+              small: String(''),
+              large: String(''),
+            },
+            gallery: String(''),
+          },
+        },
+      ]
+      return aPainting
+    }
+  }
+
+  GetARss() {
+    const data = GetRss()
+    if (data) {
+      const data_json3 = data.items.map(item => {
+        return {
+          name: String(''),
+          year: Number(item.pubDate),
+          description: String(item.description),
+          source: String(item.link),
+          artist: {
+            image: String(''),
+            name: String(''),
+          },
+          images: {
+            thumbnail: String(item.enclosures[0].url),
+            hero: {
+              small: String(''),
+              large: String(''),
+            },
+            gallery: String(''),
+          },
+        }
+      })
+      console.log(data)
+      return data_json3.map((painting, index) => {
+        return <GalleryCard {...painting} id={index} key={index} />
+      })
+    } else {
+      const aPainting: Painting[] = [
+        {
+          name: String(''),
+          year: Number(''),
+          description: String(''),
+          source: String(''),
+          artist: {
+            image: String(''),
+            name: String(''),
+          },
+          images: {
+            thumbnail: String(''),
+            hero: {
+              small: String(''),
+              large: String(''),
+            },
+            gallery: String(''),
+          },
+        },
+      ]
+      return aPainting.map((painting, index) => {
+        return <GalleryCard {...painting} id={index} key={index} />
+      })
+    }
+  }
+}
+export default GetRemoteData*/

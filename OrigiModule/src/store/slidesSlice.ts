@@ -3,44 +3,6 @@ import { RootState } from 'store'
 //import data from 'data/data.json'
 import { Painting } from 'models/painting'
 
-import { parse } from 'rss-to-json'
-
-//let data_rss = null
-//let data_json = data
-
-// async await ---
-/*;(async function () {
-  data_rss = await parse('http://localhost:5000/elsocialista', {
-    method: 'get',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
-  //data_json = JSON.stringify(data_rss, null, 3)
-  data_json = data_rss.items.map(item => {
-    return {
-      name: String(item.title),
-      link: String(item.link),
-      year: Number(item.pubDate),
-      description: String(item.description),
-      source: String(item.link),
-      artist: {
-        image: String(''),
-        name: String(''),
-      },
-      images: {
-        thumbnail: String(''),
-        hero: {
-          small: String(''),
-          large: String(''),
-        },
-        gallery: String(''),
-      },
-    }
-  })
-  console.log(data_json)
-})()*/
-
 type SlidesSlice = {
   slides: Painting[]
   direction: number
@@ -48,59 +10,33 @@ type SlidesSlice = {
   isPlaying: boolean
 }
 
-const data_json2 = () => {
-  let data_json2: Painting[] = [
-    {
+let slidesLib = [
+  {
+    name: String(''),
+    year: Number(''),
+    description: String(''),
+    source: String(''),
+    artist: {
+      image: String(''),
       name: String(''),
-      year: Number(''),
-      description: String(''),
-      source: String(''),
-      artist: {
-        image: String(''),
-        name: String(''),
-      },
-      images: {
-        thumbnail: String(''),
-        hero: {
-          small: String(''),
-          large: String(''),
-        },
-        gallery: String(''),
-      },
     },
-  ]
-  parse('http://localhost:5000/elsocialista', {
-    method: 'get',
-    headers: {
-      'Content-Type': 'multipart/form-data',
+    images: {
+      thumbnail: String(''),
+      hero: {
+        small: String(''),
+        large: String(''),
+      },
+      gallery: String(''),
     },
-  }).then(data_rss2 => {
-    data_json2 = data_rss2.items.map(item => {
-      return {
-        name: String(item.title),
-        year: Number(item.pubDate),
-        description: String(item.description),
-        source: String(item.link),
-        artist: {
-          image: String(''),
-          name: String(''),
-        },
-        images: {
-          thumbnail: String(''),
-          hero: {
-            small: String(''),
-            large: String(''),
-          },
-          gallery: String(''),
-        },
-      }
-    })
-  })
-  return data_json2
+  },
+]
+
+export function setSlidesLib(slides: Painting[]) {
+  slidesLib = slides
 }
 
 const initialSlidesState: SlidesSlice = {
-  slides: data_json2(),
+  slides: slidesLib,
   direction: 0,
   currentSlideIndex: 0,
   isPlaying: false,

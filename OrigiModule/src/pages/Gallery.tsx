@@ -3,82 +3,14 @@ import Macy from 'macy'
 import { motion } from 'framer-motion'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useAsync } from 'react-async'
-
 import queries from 'styles/breakpoints'
 //import data from 'data/data.json'
-import GalleryCard from 'components/molecules/GalleryCard'
+//import GalleryCard from 'components/molecules/GalleryCard'
 import { pageAnimation, galleryAnimation } from 'utils/animations'
-import { resetSlider } from 'store/slidesSlice'
-
-import { Painting } from 'models/painting'
-import { parse } from 'rss-to-json'
-
-const FetchRss = async () => {
-  const response_rss = await parse('http://localhost:5000/elsocialista', {
-    method: 'get',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
-  if (!response_rss.title) throw new Error('fetch')
-  return response_rss
-}
-
-const GetRss = () => {
-  const { data, error } = useAsync({ promiseFn: FetchRss })
-
-  if (data) {
-    const data_json3 = data.items.map(item => {
-      return {
-        name: String(''),
-        year: Number(item.pubDate),
-        description: String(item.description),
-        source: String(item.link),
-        artist: {
-          image: String(''),
-          name: String(''),
-        },
-        images: {
-          thumbnail: String(item.enclosures[0].url),
-          hero: {
-            small: String(''),
-            large: String(''),
-          },
-          gallery: String(''),
-        },
-      }
-    })
-    console.log(data)
-    return data_json3.map((painting, index) => {
-      return <GalleryCard {...painting} id={index} key={index} />
-    })
-  } else {
-    const aPainting: Painting[] = [
-      {
-        name: String(''),
-        year: Number(''),
-        description: String(''),
-        source: String(''),
-        artist: {
-          image: String(''),
-          name: String(''),
-        },
-        images: {
-          thumbnail: String(''),
-          hero: {
-            small: String(''),
-            large: String(''),
-          },
-          gallery: String(''),
-        },
-      },
-    ]
-    return aPainting.map((painting, index) => {
-      return <GalleryCard {...painting} id={index} key={index} />
-    })
-  }
-}
+import { resetSlider, setSlidesLib } from 'store/slidesSlice'
+//import { GetFullRss } from 'data/getRemoteData'
+import { GetFullRss, GetFullRssPaiting } from 'data/getRemoteData'
+//import { Painting } from 'models/painting'
 
 const Wrapper = styled(motion.main)`
   padding: 1.5rem;
@@ -112,6 +44,8 @@ const macyOptions = {
   },
 }
 
+setSlidesLib(GetFullRssPaiting())
+
 const Gallery = (): JSX.Element => {
   const dispatch = useDispatch()
 
@@ -123,13 +57,7 @@ const Gallery = (): JSX.Element => {
     new Macy(macyOptions)
   }, [])
 
-  const myCards = GetRss()
-
-  /*getRss().then(data => {
-    myCards = data.map((painting, index) => {
-      return <GalleryCard {...painting} id={index} key={index} />
-    })
-  })*/
+  const myCards = GetFullRss()
 
   console.log(myCards)
 
