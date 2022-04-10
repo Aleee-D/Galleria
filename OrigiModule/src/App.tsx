@@ -4,7 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 
 import Gallery from 'pages/Gallery'
 import Slideshow from 'pages/Slideshow'
-import Header from 'components/organisms/Header/'
+import Header from 'components/organisms/Header'
 import LightBox from 'components/organisms/Lightbox'
 
 function App(): JSX.Element {
