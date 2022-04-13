@@ -2,6 +2,7 @@ import { useAsync } from 'react-async'
 import { parse } from 'rss-to-json'
 import GalleryCard from 'components/molecules/GalleryCard'
 import { getAllJSDocTags } from 'typescript'
+import HTMLparse from 'html-react-parser'
 
 let dataLib
 
@@ -25,7 +26,7 @@ function GetRss() {
 export const aPainting = [
   {
     name: String(''),
-    year: Number(''),
+    year: String(''),
     description: String(''),
     source: String(''),
     artist: {
@@ -50,7 +51,7 @@ export function GetFullRss() {
     const data_json3 = data.items.map(item => {
       return {
         name: String(''),
-        year: Number(item.pubDate),
+        year: String(item.category),
         description: String(item.description),
         source: String(item.link),
         artist: {
@@ -60,8 +61,8 @@ export function GetFullRss() {
         images: {
           thumbnail: String(item.enclosures[0].url),
           hero: {
-            small: String(''),
-            large: String(''),
+            small: String(item.enclosures[0].url).replace('S.jpg', 'M.jpg'),
+            large: String(item.enclosures[0].url).replace('S.jpg', 'L.jpg'),
           },
           gallery: String(''),
         },
@@ -80,25 +81,29 @@ export function GetFullRss() {
 
 export function GetFullRssPaiting() {
   let data
+  console.log(dataLib)
   data = dataLib
   if (data) {
     const data_json3 = data.items.map(item => {
       return {
-        name: String(''),
-        year: Number(item.pubDate),
-        description: String(item.description),
+        name: String(' '),
+        year: String(item.category),
+        description: HTMLparse(item.description, {
+          replace: ({ attribs }) =>
+            attribs && attribs.class != 'K2FeedIntroText' && <></>,
+        }),
         source: String(item.link),
         artist: {
           image: String(''),
-          name: String(''),
+          name: String(' '),
         },
         images: {
           thumbnail: String(item.enclosures[0].url),
           hero: {
-            small: String(''),
-            large: String(''),
+            small: String(item.enclosures[0].url).replace('S.jpg', 'M.jpg'),
+            large: String(item.enclosures[0].url).replace('S.jpg', 'L.jpg'),
           },
-          gallery: String(''),
+          gallery: String(item.enclosures[0].url).replace('S.jpg', 'L.jpg'),
         },
       }
     })

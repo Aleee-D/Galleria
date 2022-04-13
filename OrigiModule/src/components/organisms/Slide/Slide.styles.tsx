@@ -210,7 +210,7 @@ export const Button = styled(motion.button)`
 `
 
 type DescriptionProps = {
-  year: number
+  year: string
 }
 
 export const Description = styled.p`

@@ -44,9 +44,8 @@ const macyOptions = {
   },
 }
 
-setSlidesLib(GetFullRssPaiting())
-
 const Gallery = (): JSX.Element => {
+  setSlidesLib(GetFullRssPaiting())
   const dispatch = useDispatch()
 
   useEffect(() => {

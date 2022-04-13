@@ -29,6 +29,7 @@ const Slide = (): JSX.Element => {
   const current = useSelector(currentSlide)
   const dispatch = useDispatch()
 
+  console.log(current)
   return (
     <AnimatePresence initial={false} custom={direction}>
       <Article
@@ -56,28 +57,39 @@ const Slide = (): JSX.Element => {
               />
               <img src={current.images.hero.small} alt="" />
             </picture>
-            <Caption>
-              <h1>{current.name}</h1>
-              <p>{current.artist.name}</p>
-              <ArtistImage>
+            {current.name.length > 1 && (
+              <Caption>
+                <h1>{current.name}</h1>
+                <p>{current.artist.name}</p>
+                <ArtistImage>
+                  <img src={current.artist.image} alt="" />
+                </ArtistImage>
+              </Caption>
+            )}
+            {current.artist.image.length > 1 && (
+              <ArtistImageDesktop>
                 <img src={current.artist.image} alt="" />
-              </ArtistImage>
-            </Caption>
-            <ArtistImageDesktop>
-              <img src={current.artist.image} alt="" />
-            </ArtistImageDesktop>
+              </ArtistImageDesktop>
+            )}
             <Button onClick={() => dispatch(openLightBox())}>
               <IconView />
               <span>View image</span>
             </Button>
           </Figure>
         </Header>
-        <Body year={current.year}>
-          <Description>{current.description}</Description>
-          <Link href={current.source} target="_blank" rel="noopener noreferrer">
-            Go to source
-          </Link>
-        </Body>
+        {1 > 0 && (
+          <Body year="">
+            <b>{current.year}</b>
+            <Description>{current.description}</Description>
+            <Link
+              href={current.source}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Go to source
+            </Link>
+          </Body>
+        )}
       </Article>
     </AnimatePresence>
   )

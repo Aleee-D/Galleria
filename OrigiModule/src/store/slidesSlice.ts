@@ -13,7 +13,7 @@ type SlidesSlice = {
 let slidesLib = [
   {
     name: String(''),
-    year: Number(''),
+    year: String(''),
     description: String(''),
     source: String(''),
     artist: {
@@ -33,6 +33,7 @@ let slidesLib = [
 
 export function setSlidesLib(slides: Painting[]) {
   slidesLib = slides
+  console.log(slidesLib)
 }
 
 const initialSlidesState: SlidesSlice = {
@@ -47,7 +48,10 @@ const slidesSlice = createSlice({
   initialState: initialSlidesState,
   reducers: {
     setCurrentSlide: (state, action: PayloadAction<number>) => {
+      state.slides = slidesLib
       state.currentSlideIndex = action.payload
+      console.log(action.payload)
+      console.log(state.slides)
     },
     paginate: (state, action: PayloadAction<number>) => {
       const direction = action.payload
@@ -78,8 +82,13 @@ export const numberOfSlides = (state: RootState): number =>
 export const currentSlideIndex = (state: RootState): number =>
   state.slideshow.currentSlideIndex
 
-export const currentSlide = (state: RootState): Painting =>
-  state.slideshow.slides[state.slideshow.currentSlideIndex]
+export const currentSlide = (state: RootState): Painting => {
+  if (state.slideshow.currentSlideIndex > 0)
+    return state.slideshow.slides[state.slideshow.currentSlideIndex]
+  else 
+    
+    return state.slideshow.slides[1]
+}
 
 export const slidesDirection = (state: RootState): number =>
   state.slideshow.direction

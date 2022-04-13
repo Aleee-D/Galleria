@@ -24,15 +24,13 @@ const SlideFooter = (): JSX.Element => {
   const dispatch = useDispatch()
 
   const progressBarWidth = Math.round(((currentIndex + 1) / slidesLength) * 100)
-
+  //<h3>{current.name}</h3>
+  //<p>{current.artist.name}</p>
   return (
     <Wrapper>
       <ProgressBar width={progressBarWidth} />
       <Footer>
-        <SlideInfo aria-live="polite">
-          <h3>{current.name}</h3>
-          <p>{current.artist.name}</p>
-        </SlideInfo>
+        <SlideInfo aria-live="polite"></SlideInfo>
         <Controls>
           <ArrowButton
             aria-label="Previous Slide"

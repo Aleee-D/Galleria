@@ -1,7 +1,7 @@
 export interface Painting {
   id?: number
   name: string
-  year: number
+  year: string
   description: string
   source: string
   artist: Artist
