@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from 'store'
 //import data from 'data/data.json'
 import { Painting } from 'models/painting'
+import { GetFullRss, GetFullRssPaiting } from 'data/getRemoteData'
 
 type SlidesSlice = {
   slides: Painting[]
@@ -85,9 +86,10 @@ export const currentSlideIndex = (state: RootState): number =>
 export const currentSlide = (state: RootState): Painting => {
   if (state.slideshow.currentSlideIndex > 0)
     return state.slideshow.slides[state.slideshow.currentSlideIndex]
-  else 
-    
-    return state.slideshow.slides[1]
+  else {
+    setSlidesLib(GetFullRssPaiting())
+    return slidesLib[0]
+  }
 }
 
 export const slidesDirection = (state: RootState): number =>

@@ -82,6 +82,7 @@ export function GetFullRss() {
 export function GetFullRssPaiting() {
   let data
   console.log(dataLib)
+  //if (dataLib === undefined) dataLib = GetRss()
   data = dataLib
   if (data) {
     const data_json3 = data.items.map(item => {

@@ -1,7 +1,6 @@
 import queries from 'styles/breakpoints'
 import { useDispatch, useSelector } from 'react-redux'
 import { AnimatePresence } from 'framer-motion'
-
 import { ReactComponent as IconView } from 'assets/shared/icon-view-image.svg'
 import {
   currentSlideIndex,
@@ -73,7 +72,7 @@ const Slide = (): JSX.Element => {
             )}
             <Button onClick={() => dispatch(openLightBox())}>
               <IconView />
-              <span>View image</span>
+              <span>Ver imagen</span>
             </Button>
           </Figure>
         </Header>
@@ -86,7 +85,7 @@ const Slide = (): JSX.Element => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Go to source
+              Leer la nota completa
             </Link>
           </Body>
         )}
