@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from 'store'
 //import data from 'data/data.json'
 import { Painting } from 'models/painting'
-import { GetFullRss, GetFullRssPaiting } from 'data/getRemoteData'
+//import { GetFullRss, GetFullRssPaiting } from 'data/getRemoteData'
 
 type SlidesSlice = {
   slides: Painting[]
@@ -32,9 +32,8 @@ let slidesLib = [
   },
 ]
 
-export function setSlidesLib(slides: Painting[]) {
+export function setSlidesLib(slides: Painting[]): void {
   slidesLib = slides
-  console.log(slidesLib)
 }
 
 const initialSlidesState: SlidesSlice = {
@@ -51,8 +50,6 @@ const slidesSlice = createSlice({
     setCurrentSlide: (state, action: PayloadAction<number>) => {
       state.slides = slidesLib
       state.currentSlideIndex = action.payload
-      console.log(action.payload)
-      console.log(state.slides)
     },
     paginate: (state, action: PayloadAction<number>) => {
       const direction = action.payload
@@ -84,12 +81,7 @@ export const currentSlideIndex = (state: RootState): number =>
   state.slideshow.currentSlideIndex
 
 export const currentSlide = (state: RootState): Painting => {
-  if (state.slideshow.currentSlideIndex > 0)
-    return state.slideshow.slides[state.slideshow.currentSlideIndex]
-  else {
-    setSlidesLib(GetFullRssPaiting())
-    return slidesLib[0]
-  }
+  return state.slideshow.slides[state.slideshow.currentSlideIndex]
 }
 
 export const slidesDirection = (state: RootState): number =>

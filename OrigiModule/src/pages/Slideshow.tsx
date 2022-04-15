@@ -8,6 +8,7 @@ import Slide from 'components/organisms/Slide'
 import SlideFooter from 'components/molecules/SlideFooter'
 import { isPlaying, paginate, currentSlideIndex } from 'store/slidesSlice'
 import { pageAnimation } from 'utils/animations'
+//import { SlideInfo } from 'components/molecules/SlideFooter/SlideFooter.styles.'
 
 const Wrapper = styled(motion.main)`
   padding-top: 1.5rem;
@@ -33,7 +34,6 @@ const Slideshow = (): JSX.Element => {
   const dispatch = useDispatch()
   const isSlideshowPlaying = useSelector(isPlaying)
   const currentIndex = useSelector(currentSlideIndex)
-
   const clearInterval = () => window.clearInterval(id.current)
 
   const startInterval = useCallback(() => {

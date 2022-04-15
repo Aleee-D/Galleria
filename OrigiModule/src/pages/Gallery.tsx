@@ -34,7 +34,7 @@ const macyOptions = {
   trueOrder: true,
   mobileFirst: true,
   margin: 24,
-  columns: 1,
+  columns: 4,
   breakAt: {
     1000: 4,
     650: {
@@ -57,8 +57,6 @@ const Gallery = (): JSX.Element => {
   }, [])
 
   const myCards = GetFullRss()
-
-  console.log(myCards)
 
   return (
     <Wrapper exit="exit" variants={pageAnimation} initial="hide" animate="show">

@@ -1,7 +1,6 @@
 import { useAsync } from 'react-async'
 import { parse } from 'rss-to-json'
 import GalleryCard from 'components/molecules/GalleryCard'
-import { getAllJSDocTags } from 'typescript'
 import HTMLparse from 'html-react-parser'
 
 let dataLib
@@ -18,7 +17,7 @@ async function FetchRss() {
 }
 
 function GetRss() {
-  const { data, error } = useAsync({ promiseFn: FetchRss })
+  const { data } = useAsync({ promiseFn: FetchRss })
   dataLib = data
   return data
 }
@@ -72,7 +71,6 @@ export function GetFullRss() {
       return <GalleryCard {...painting} id={index} key={index} />
     })
   } else {
-    console.log('data NO tiene datos')
     return aPainting.map((painting, index) => {
       return <GalleryCard {...painting} id={index} key={index} />
     })
@@ -81,8 +79,7 @@ export function GetFullRss() {
 
 export function GetFullRssPaiting() {
   let data
-  console.log(dataLib)
-  //if (dataLib === undefined) dataLib = GetRss()
+  data = GetRss()
   data = dataLib
   if (data) {
     const data_json3 = data.items.map(item => {
@@ -91,7 +88,7 @@ export function GetFullRssPaiting() {
         year: String(item.category),
         description: HTMLparse(item.description, {
           replace: ({ attribs }) =>
-            attribs && attribs.class != 'K2FeedIntroText' && <></>,
+            attribs && attribs.class !== 'K2FeedIntroText' && <></>,
         }),
         source: String(item.link),
         artist: {
@@ -108,7 +105,6 @@ export function GetFullRssPaiting() {
         },
       }
     })
-    console.log(data)
     return data_json3
   } else {
     return aPainting
