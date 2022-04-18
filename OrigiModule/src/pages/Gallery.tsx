@@ -9,7 +9,7 @@ import queries from 'styles/breakpoints'
 import { pageAnimation, galleryAnimation } from 'utils/animations'
 import { resetSlider, setSlidesLib } from 'store/slidesSlice'
 //import { GetFullRss } from 'data/getRemoteData'
-import { GetFullRss, GetFullRssPaiting } from 'data/getRemoteData'
+import { GetFullRss, GetFullRssPaiting, setUrlRss } from 'data/getRemoteData'
 //import { Painting } from 'models/painting'
 
 const Wrapper = styled(motion.main)`
@@ -44,7 +44,12 @@ const macyOptions = {
   },
 }
 
-const Gallery = (): JSX.Element => {
+interface MyProps {
+  urlRss: string
+}
+
+const Gallery = (props: any): JSX.Element => {
+  setUrlRss(props.urlRss)
   setSlidesLib(GetFullRssPaiting())
   const dispatch = useDispatch()
 

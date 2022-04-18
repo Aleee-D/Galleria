@@ -3,10 +3,15 @@ import { parse } from 'rss-to-json'
 import GalleryCard from 'components/molecules/GalleryCard'
 import HTMLparse from 'html-react-parser'
 
+let urlRSS = ''
 let dataLib
 
+export function setUrlRss(urlRssParam) {
+  urlRSS = urlRssParam
+}
+
 async function FetchRss() {
-  const response_rss = await parse('http://localhost:5000/elsocialista', {
+  const response_rss = await parse(urlRSS, {
     method: 'get',
     headers: {
       'Content-Type': 'multipart/form-data',

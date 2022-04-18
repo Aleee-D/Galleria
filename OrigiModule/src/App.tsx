@@ -16,7 +16,7 @@ function App(): JSX.Element {
       <AnimatePresence exitBeforeEnter>
         <Switch>
           <Route path="/" exact>
-            <Gallery />
+            <Gallery urlRss="http://localhost:5000/elsocialista" />
           </Route>
           <Route path="/slideshow">
             <Slideshow />
